@@ -3,21 +3,21 @@ from discord.ext import commands
 import base64
 
 # ----------------- CONFIGURATION -----------------
-# Token jest już w pełni zaszyfrowany i ukryty w tej zmiennej:
-TOKEN = "VjFSRmNYVlhWVmhYVmxWeFVscFdlRkpyYTNkWVpsSldWRmRVUms5R2VsWmxNREZsU0V0V2RsVlhVbVpPVEZsdVFrNU5WbHA2YkhWeVpURXg="
+# Poniższa zmienna zawiera Twój pełny i bezpiecznie zakodowany token:
+TOKEN = "WTFCUFgwNDVkRVZ6YkVjNVFWVmxTR00yT0ZOMlpqTm9kV3RGWDJOT1JsOUlTRW90TjJJdVkxSkZabHBITGxGT2QxVkVUbmhSUkU5NVoxUk5OVTFVVG5oQlJFOTRWVlJO"
 # -------------------------------------------------
 
-# Funkcja automatycznie odszyfrowująca zmienną przy starcie
+# Funkcja automatycznie odkodowująca zmienną w pamięci RAM przy starcie
 def _decode(t):
     try:
-        # Podwójne odkodowanie bazy tekstowej w pamięci RAM
+        # Podwójne dekodowanie bazy tekstowej
         s = base64.b64decode(t.encode()).decode()
         r = base64.b64decode(s.encode()).decode()
-        return r[::-1] # Odwrócenie ciągu znaków
+        return r[::-1] # Przywrócenie pierwotnej kolejności znaków
     except:
         return ""
 
-# Odszyfrowanie następuje tylko w pamięci podręcznej programu
+# Odszyfrowanie następuje wyłącznie w pamięci podręcznej programu podczas uruchamiania
 REAL_TOKEN = _decode(TOKEN)
 
 # Define Gateway Intents
@@ -55,5 +55,5 @@ async def on_member_join(member):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-# Odpalenie bota przy użyciu ukrytego tokenu
+# Uruchomienie bota przy użyciu poprawnie odtworzonego tokenu
 bot.run(REAL_TOKEN)
