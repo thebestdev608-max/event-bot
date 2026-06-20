@@ -4,7 +4,7 @@ import base64
 
 # ----------------- CONFIGURATION -----------------
 # Poniższa zmienna zawiera Twój pełny i bezpiecznie zakodowany token:
-TOKEN = "WTFCUFgwNDVkRVZ6YkVjNVFWVmxTR00yT0ZOMlpqTm9kV3RGWDJOT1JsOUlTRW90TjJJdVkxSkZabHBITGxGT2QxVkVUbmhSUkU5NVoxUk5OVTFVVG5oQlJFOTRWVlJO"
+TOKEN = "TVRVeE9EQXhOVE01TVRneU9EUXhORFV3TlEuRzJpcENxLlBUa2thbDFBanBPdV84ZlZUa2xxSHBKZy1FT1Y4em1IVFRrNHJz"
 # -------------------------------------------------
 
 # Funkcja automatycznie odkodowująca zmienną w pamięci RAM przy starcie
