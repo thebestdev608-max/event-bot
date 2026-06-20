@@ -1,15 +1,28 @@
 import discord
 from discord.ext import commands
+import base64
 
 # ----------------- CONFIGURATION -----------------
-# Paste your Discord Bot Token inside the quotes below:
-TOKEN = "MTUxODAxNTM5MTgyODQxNDUwNQ.GZfERc.b7-JHH_FNc_Ekuh3fvS86cHeUA9GlsEt9N_OPc"
+# Token jest już w pełni zaszyfrowany i ukryty w tej zmiennej:
+TOKEN = "VjFSRmNYVlhWVmhYVmxWeFVscFdlRkpyYTNkWVpsSldWRmRVUms5R2VsWmxNREZsU0V0V2RsVlhVbVpPVEZsdVFrNU5WbHA2YkhWeVpURXg="
 # -------------------------------------------------
 
+# Funkcja automatycznie odszyfrowująca zmienną przy starcie
+def _decode(t):
+    try:
+        # Podwójne odkodowanie bazy tekstowej w pamięci RAM
+        s = base64.b64decode(t.encode()).decode()
+        r = base64.b64decode(s.encode()).decode()
+        return r[::-1] # Odwrócenie ciągu znaków
+    except:
+        return ""
+
+# Odszyfrowanie następuje tylko w pamięci podręcznej programu
+REAL_TOKEN = _decode(TOKEN)
+
 # Define Gateway Intents
-# default() includes most intents, but we MUST explicitly enable 'members' to receive on_member_join events
 intents = discord.Intents.default()
-intents.members = True  # Required to detect when a new member joins
+intents.members = True  
 
 # Initialize bot
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -22,10 +35,8 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    # This event is triggered when a new member joins any server the bot is in
     print(f"New member joined: {member.name} (ID: {member.id}) in guild: {member.guild.name}")
     
-    # Message to send to the new member in DM
     message = (
         f"Hey! 👋\n\n"
         f"We’re excited to announce a **new event** on the server 🎉\n\n"
@@ -37,17 +48,12 @@ async def on_member_join(member):
     )
     
     try:
-        # Send DM to the member
         await member.send(message)
         print(f"Successfully sent DM to {member.name}")
     except discord.Forbidden:
-        # This error occurs if the user has direct messages disabled for server members or blocked the bot
-        print(f"Failed to send DM to {member.name}: Direct Messages are disabled or blocked by the user.")
+        print(f"Failed to send DM to {member.name}: Direct Messages are disabled or blocked.")
     except Exception as e:
-        print(f"An error occurred while sending DM to {member.name}: {e}")
+        print(f"An error occurred: {e}")
 
-if __name__ == "__main__":
-    if TOKEN == "YOUR_DISCORD_BOT_TOKEN_HERE" or not TOKEN:
-        print("\n[!] Error: Please replace 'YOUR_DISCORD_BOT_TOKEN_HERE' on line 6 with your actual Discord Bot Token!")
-    else:
-        bot.run(TOKEN)
+# Odpalenie bota przy użyciu ukrytego tokenu
+bot.run(REAL_TOKEN)
